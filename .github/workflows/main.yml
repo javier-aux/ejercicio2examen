@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+    - main
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - name: copiar codigo
+        uses: actions/checkout@v4
+      - name: ejecutando test
+        run: |
+          echo "fase de test"
+  build:
+    needs: test
+    runs-on: self-hosted
+    steps:
+      - name: copiar codigo
+        uses: actions/checkout@v4
+      - name: construyendo imagenes
+        run: |
+            docker compose build --no-cache
+            #docker compose build backend --no-cache
+            # docker build -t nombre_imagen ./
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: copiar codigo
+        uses: actions/checkout@v4
+      - name: construyendo contenedores
+        run: |
+            docker compose up -d
