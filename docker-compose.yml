@@ -1,0 +1,18 @@
+services:
+  backend:
+    build: ./PersonCrud/PersonCrud.Api
+    environment:
+      ASPNETCORE_URLS: http://+:5152
+    ports:
+    - "5152:5152"
+    networks:
+      - red852
+
+  frontend:
+    build: ./client
+    ports:
+      - "5000:4200"
+    networks:
+      - red852
+networks:
+  red852:
